@@ -20,19 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-try:
-    from yatube.settings_secret_key import SECRET_KEY
-except ImportError:
-    from django.utils.crypto import get_random_string
-    from os import path
-
-    CHAR_KIT = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)"
-    SECRET_KEY = get_random_string(50, CHAR_KIT)
-    with open(
-        path.join(BASE_DIR, "yatube", "settings_secret_key.py"), "w"
-    ) as key_file:
-        key_file.write("SECRET_KEY = '{key}'".format(key=SECRET_KEY))
-
+SECRET_KEY = '9^%3wz7tb1*%r!9p$*&ylrvgq3soz7rof5-$@2yn56@z^pe859'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
