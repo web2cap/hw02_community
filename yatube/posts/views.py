@@ -4,6 +4,7 @@ from .models import Post, Group
 
 POST_PER_PAGE = 10
 
+
 def index(request):
     """В переменную posts будет сохранена выборка из 10 объектов модели Post,
     отсортированных по полю pub_date по убыванию
