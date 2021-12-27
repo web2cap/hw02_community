@@ -9,7 +9,7 @@ def index(request):
     отсортированных по полю pub_date по убыванию
     (от больших значений к меньшим).
     """
-    posts = Post.objects.order_by("-pub_date")[:POST_PER_PAGE]
+    posts = Post.objects.all()[:POST_PER_PAGE]
     context = {
         "posts": posts,
     }
@@ -20,8 +20,7 @@ def group_posts(request, slug):
     """Страница список постов."""
     group = get_object_or_404(Group, slug=slug)
 
-    posts = Post.objects.filter(group=group).order_by("-pub_date")[:POST_PER_PAGE]
-
+    posts = group.posts.all()[:POST_PER_PAGE]
     template = "posts/group_list.html"
     context = {
         "group": group,
