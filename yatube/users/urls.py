@@ -32,14 +32,14 @@ urlpatterns = [
         ),
         name="password_reset",
     ),
-    # :TODO add template for fogot password
     path(
         "password_reset/done/",
         PasswordResetDoneView.as_view(
-            # template_name="users/password_reset_done.html"
+            template_name="users/password_reset_done.html"
         ),
         name="password_reset_done",
     ),
+    # :TODO add template for fogot password
     path(
         "password_reset_confirm/<uidb64>/<token>/",
         PasswordResetConfirmView.as_view(
