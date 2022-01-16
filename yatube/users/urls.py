@@ -20,22 +20,26 @@ urlpatterns = [
         name="logout",
     ),
     path("signup/", views.SignUp.as_view(), name="signup"),
-    path("login/", LoginView.as_view(template_name="users/login.html"), name="login"),
-    # :TODO add template for fogot password
+    path(
+        "login/",
+        LoginView.as_view(template_name="users/login.html"),
+        name="login",
+    ),
     path(
         "password_reset/",
         PasswordResetView.as_view(
-            # template_name='users/password_reset.html'
+            template_name="users/password_reset_form.html"
         ),
         name="password_reset",
     ),
     path(
         "password_reset/done/",
         PasswordResetDoneView.as_view(
-            # template_name="users/password_reset_done.html"
+            template_name="users/password_reset_done.html"
         ),
         name="password_reset_done",
     ),
+    # :TODO add template for fogot password
     path(
         "password_reset_confirm/<uidb64>/<token>/",
         PasswordResetConfirmView.as_view(
