@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 
 from .models import Post, Group
@@ -6,13 +7,19 @@ POST_PER_PAGE = 10
 
 
 def index(request):
-    """В переменную posts будет сохранена выборка из 10 объектов модели Post,
-    отсортированных по полю pub_date по убыванию
-    (от больших значений к меньшим).
+    """В переменную page_obj будет сохранена выборка из POST_PER_PAGE объектов модели Post,
+    отсортированных по полю pub_date по убыванию,
+    с учетом номера страницы переданного в GET.
     """
-    posts = Post.objects.all()[:POST_PER_PAGE]
+
+    post_list = Post.objects.all().order_by("-pub_date")
+    paginator = Paginator(post_list, POST_PER_PAGE)
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        "posts": posts,
+        "page_obj": page_obj,
     }
     return render(request, "posts/index.html", context)
 
