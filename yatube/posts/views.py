@@ -28,10 +28,14 @@ def group_posts(request, slug):
     """Страница список постов."""
     group = get_object_or_404(Group, slug=slug)
 
-    posts = group.posts.all()[:POST_PER_PAGE]
+    post_list = group.posts.all()
+    paginator = Paginator(post_list, POST_PER_PAGE)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     template = "posts/group_list.html"
     context = {
         "group": group,
-        "posts": posts,
+        "page_obj": page_obj,
     }
     return render(request, template, context)

@@ -7,7 +7,7 @@
         {{ group.description }}
     </p>
     <article>
-        {% for post in posts %}
+        {% for post in page_obj %}
         <ul>
             <li>
                 Автор: {{ post.author.get_full_name }}
@@ -21,5 +21,7 @@
         <hr>{% endif %}
         {% endfor %}
     </article>
+
+    {% include 'posts/includes/paginator.html' %}
 </div>
 {% endblock %}
