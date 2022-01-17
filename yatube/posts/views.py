@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 
-from .models import Post, Group
+from .models import Post, Group, User
 
 POST_PER_PAGE = 10
 
@@ -38,4 +38,35 @@ def group_posts(request, slug):
         "group": group,
         "page_obj": page_obj,
     }
+    return render(request, template, context)
+
+
+def profile(request, username):
+    """Список постов пользователя, общее количество постов, инофрмация о пользователе."""
+
+    user = get_object_or_404(User, username=username)
+
+    post_list = user.posts.all()
+
+    paginator = Paginator(post_list, POST_PER_PAGE)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    template = "posts/profile.html"
+    context = {
+        "page_obj": page_obj,
+        "posts_count": post_list.count(),
+        "user": user,
+    }
+
+    return render(request, template, context)
+
+
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+
+    print(post)
+
+    template = "posts/post_detail.html"
+    context = {}
     return render(request, template, context)
