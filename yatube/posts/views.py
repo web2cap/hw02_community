@@ -1,7 +1,9 @@
+from tempfile import tempdir
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Post, Group, User
+from .models import Group, Post, User
+from .forms import PostForm
 
 POST_PER_PAGE = 10
 
@@ -74,3 +76,30 @@ def post_detail(request, post_id):
         "posts_count": post_list.count(),
     }
     return render(request, template, context)
+
+
+def post_create(request):
+    """Добавления поста."""
+
+    template = "posts/create_post.html"
+
+    if request.method == "POST":
+        form = PostForm(request.POST)
+
+        if form.is_valid():
+            text = form.cleaned_data["text"]
+            group = form.cleaned_data["group"]
+
+            instance = form.save(commit=False)
+            instance.author_id = request.user.id
+            instance.save()
+
+            user_name = request.user.username
+
+            return redirect("posts:profile", user_name)
+
+        return render(request, template, {"form": form})
+
+    form = PostForm()
+
+    return render(request, template, {"form": form})
