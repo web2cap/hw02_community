@@ -44,9 +44,9 @@ def group_posts(request, slug):
 def profile(request, username):
     """Список постов пользователя, общее количество постов, инофрмация о пользователе."""
 
-    user = get_object_or_404(User, username=username)
+    author = get_object_or_404(User, username=username)
 
-    post_list = user.posts.all()
+    post_list = author.posts.all()
 
     paginator = Paginator(post_list, POST_PER_PAGE)
     page_number = request.GET.get("page")
@@ -56,7 +56,7 @@ def profile(request, username):
     context = {
         "page_obj": page_obj,
         "posts_count": post_list.count(),
-        "user": user,
+        "author": author,
     }
 
     return render(request, template, context)
