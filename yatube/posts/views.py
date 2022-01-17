@@ -63,6 +63,7 @@ def profile(request, username):
 
 
 def post_detail(request, post_id):
+    """Страница поста и количество постов пользователя."""
     post = get_object_or_404(Post, pk=post_id)
 
     post_list = post.author.posts.all()
