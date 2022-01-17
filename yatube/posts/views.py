@@ -1,3 +1,4 @@
+from multiprocessing import context
 from tempfile import tempdir
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
@@ -103,3 +104,39 @@ def post_create(request):
     form = PostForm()
 
     return render(request, template, {"form": form})
+
+
+def post_edit(request, post_id):
+    """Редактирование поста. Доступно только автору."""
+
+    template = "posts/create_post.html"
+
+    post = get_object_or_404(Post, pk=post_id)
+
+    if request.user.id != post.author.id:
+        return redirect("posts:post_detail", post.pk)
+
+    if request.method == "POST":
+        # :TODO
+        form = PostForm(request.POST)
+
+        if form.is_valid():
+            text = form.cleaned_data["text"]
+            group = form.cleaned_data["group"]
+
+            instance = form.save(commit=False)
+            instance.author_id = request.user.id
+            instance.save()
+
+            user_name = request.user.username
+
+            return redirect("posts:profile", user_name)
+
+        return render(request, template, {"form": form})
+
+    form = PostForm(instance=post)
+    context = {
+        "form": form,
+        "is_edit": True,
+    }
+    return render(request, template, context)
