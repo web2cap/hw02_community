@@ -65,8 +65,11 @@ def profile(request, username):
 def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
 
-    print(post)
+    post_list = post.author.posts.all()
 
     template = "posts/post_detail.html"
-    context = {}
+    context = {
+        "post": post,
+        "posts_count": post_list.count(),
+    }
     return render(request, template, context)
