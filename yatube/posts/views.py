@@ -58,7 +58,6 @@ def profile(request, username):
     template = "posts/profile.html"
     context = {
         "page_obj": page_obj,
-        "posts_count": post_list.count(),
         "author": author,
     }
 
@@ -67,15 +66,12 @@ def profile(request, username):
 
 def post_detail(request, post_id):
     """Страница поста и количество постов пользователя."""
+
     post = get_object_or_404(Post, pk=post_id)
 
-    post_list = post.author.posts.all()
-
     template = "posts/post_detail.html"
-    context = {
-        "post": post,
-        "posts_count": post_list.count(),
-    }
+    context = {"post": post}
+
     return render(request, template, context)
 
 
@@ -85,7 +81,7 @@ def post_create(request):
     template = "posts/create_post.html"
 
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST or None)
 
         if form.is_valid():
             text = form.cleaned_data["text"]
@@ -113,23 +109,16 @@ def post_edit(request, post_id):
 
     post = get_object_or_404(Post, pk=post_id)
 
+    # Если редактировать пытается не автор
     if request.user.id != post.author.id:
         return redirect("posts:post_detail", post.pk)
 
     if request.method == "POST":
-        # :TODO
-        form = PostForm(request.POST)
-
+        form = PostForm(request.POST or None, instance=post)
         if form.is_valid():
-            text = form.cleaned_data["text"]
-            group = form.cleaned_data["group"]
-
-            instance = form.save(commit=False)
-            instance.author_id = request.user.id
-            instance.save()
+            form.save()
 
             user_name = request.user.username
-
             return redirect("posts:profile", user_name)
 
         return render(request, template, {"form": form})
