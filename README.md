@@ -7,7 +7,7 @@ Final repo: https://github.com/web2cap/hw05_final
 
  - posts: articles by authors and categories of articles
  - about: static pages
- - core: context processors
+ - core: context processors 
  - users: reimplemented authorization and registration forms
 
 ## Technology:
