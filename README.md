@@ -1,3 +1,65 @@
-# backend_community_homework
+# Catalog of articles categorized by groups
+This is the first project in the Bloggers Social Network project series.
 
-[![CI](https://github.com/yandex-praktikum/hw02_community/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/yandex-praktikum/hw02_community/actions/workflows/python-app.yml)
+Final repo: https://github.com/web2cap/hw05_final
+
+### Includes applications
+
+ - posts: articles by authors and categories of articles
+ - about: static pages
+ - core: context processors
+ - users: reimplemented authorization and registration forms
+
+## Technology:
+
+Python and Django
+
+Bootstrap
+
+## Installation
+Clone the repository and change into it on the command line:
+```
+git clone https://github.com/web2cap/hw02_community.git
+```
+
+```
+cd hw02_community
+```
+
+Create and activate virtual environment:
+
+```
+python3 -m venv venv
+```
+
+```
+source venv/bin/activate
+```
+
+```
+python3 -m pip install --upgrade pip
+```
+
+Install dependencies from requirements.txt file:
+
+```
+pip install -r requirements.txt
+```
+
+Run migrations:
+
+```
+python3 manage.py migrate
+```
+
+You can create a super user:
+
+```
+python3 manage.py createsuperuser
+```
+
+Run project:
+
+```
+python3 manage.py runserver
+```
