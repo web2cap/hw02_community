@@ -1,6 +1,8 @@
 # Catalog of articles categorized by groups
 This is the first project in the Bloggers Social Network project series.
 
+Сloned from: https://github.com/web2cap/yatube_project
+
 Final repo: https://github.com/web2cap/hw05_final
 
 ### Includes applications
